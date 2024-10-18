@@ -8,6 +8,8 @@ on:
       - starter/backend/**
       - .github/workflows/backend-ci.yaml
   pull_request:
+    branches:
+      - 'master'
     paths:
       - starter/backend/**
       - .github/workflows/backend-ci.yaml
@@ -91,14 +93,14 @@ jobs:
         id: get-commit-hash
         run: echo "::set-output name=commit-hash::$(git rev-parse --short HEAD)"
 
-      # - name: Build and upload image to ECR
-      #   uses: appleboy/docker-ecr-action@master
-      #   with:
-      #     access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     registry: ${{ vars.REGISTRY }}
-      #     tags: "latest, ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}"
-      #     repo: ${{ vars.REPO_FRONTEND }}
-      #     region: us-east-1
-      #     dockerfile: starter/frontend/Dockerfile
-      #     context: starter/frontend
+      - name: Build and upload image to ECR
+        uses: appleboy/docker-ecr-action@master
+        with:
+          access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          registry: ${{ vars.REGISTRY }}
+          tags: "latest, ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}"
+          repo: ${{ vars.REPO_BACKEND }}
+          region: us-east-1
+          dockerfile: starter/backend/Dockerfile
+          context: starter/backend
