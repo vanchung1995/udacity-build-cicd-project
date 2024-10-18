@@ -9,6 +9,8 @@ on:
 
 jobs:
   checkout-and-greeting:
+    runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
