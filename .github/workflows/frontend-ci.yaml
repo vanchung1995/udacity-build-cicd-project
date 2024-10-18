@@ -1,0 +1,16 @@
+name: frontend-ci workflow
+
+on:
+  # push:
+  #   branches:
+  #     - 'master'
+  # pull_request:
+  workflow_dispatch:
+
+jobs:
+  checkout-and-greeting:
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: say greeting
+        run: echo 'Greeting ${{github.ref.GITHUB_ACTOR}}. You are running action: ${{github.ref.GITHUB_ACTION}}'
