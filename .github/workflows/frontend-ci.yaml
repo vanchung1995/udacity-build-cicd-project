@@ -83,6 +83,7 @@ jobs:
           repo: ${{ vars.REPO }}
           region: us-east-1
           dockerfile: starter/frontend/Dockerfile
+          context: starter/frontend
         env:
           DOCKER_BUILDKIT: 1
           DEBUG: 1
