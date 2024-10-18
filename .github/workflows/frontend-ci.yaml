@@ -50,12 +50,12 @@ jobs:
         uses: actions/cache@v4.1.1
         with:
           path: ./starter/frontend/node_modules
-          key: lint-${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: test-${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install Dependencies
         working-directory: starter/frontend
         run: | 
-          npm install
+          npm ci
 
       - name: Run Test
         working-directory: starter/frontend
