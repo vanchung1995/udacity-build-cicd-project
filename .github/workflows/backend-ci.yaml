@@ -32,7 +32,7 @@ jobs:
       - name: Cache
         uses: actions/cache@v4.1.1
         with:
-          path: ./starter/backend/
+          path: ~/.local/share/virtualenvs/
           key: lint-${{ runner.os }}-node-${{ hashFiles('**/Pipfile.lock') }}
 
       - name: Install Dependencies
@@ -41,9 +41,9 @@ jobs:
           pipenv install && pipenv --venv
 
       - name: Run Lint
-        working-directory: starter/backend
-        run: | 
-          pipenv run lint
+        uses: sunnysid3up/python-linter@master
+        with:
+          source: "starter/backend"
 
   test-job:
     runs-on: ubuntu-latest
@@ -63,7 +63,7 @@ jobs:
       - name: Cache
         uses: actions/cache@v4.1.1
         with:
-          path: ./starter/backend/
+          path: ~/.local/share/virtualenvs/
           key: test-${{ runner.os }}-node-${{ hashFiles('**/Pipfile.lock') }}
 
       - name: Install Dependencies
