@@ -25,15 +25,13 @@ jobs:
           path: node_modules
           key: lint-${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
-      - name: checkout to frontend folder
-        run: | 
-          cd starter/frontend
-
       - name: Install Dependencies
+        working-directory: starter/frontend
         run: | 
           npm ci
 
       - name: Run Lint
+        working-directory: starter/frontend
         run: | 
           npm run lint
 
@@ -54,15 +52,13 @@ jobs:
           path: node_modules
           key: lint-${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
-      - name: checkout to frontend folder
-        run: | 
-          cd starter/frontend
-
       - name: Install Dependencies
+        working-directory: starter/frontend
         run: | 
           npm ci
 
       - name: Run Test
+        working-directory: starter/frontend
         run: | 
           npm run test
 
