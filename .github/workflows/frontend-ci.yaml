@@ -55,12 +55,12 @@ jobs:
       - name: Install Dependencies
         working-directory: starter/frontend
         run: | 
-          npm ci
+          npm install
 
       - name: Run Test
         working-directory: starter/frontend
         run: | 
-          npm run test
+          ls -la && npm run test
 
   build-job:
     needs: [lint-job, test-job]
