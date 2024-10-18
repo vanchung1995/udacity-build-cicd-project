@@ -38,12 +38,11 @@ jobs:
       - name: Install Dependencies
         working-directory: starter/backend
         run: | 
-          pipenv install && pipenv --venv
+          pipenv install && pipenv install --dev flake8
 
       - name: Run Lint
-        uses: sunnysid3up/python-linter@master
-        with:
-          source: "starter/backend"
+        run: | 
+          pipenv run lint
 
   test-job:
     runs-on: ubuntu-latest
