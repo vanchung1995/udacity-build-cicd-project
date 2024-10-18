@@ -13,4 +13,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: say greeting
-        run: echo 'Greeting ${{github.actor}}. You are running action: ${{github.action}}'
+        run: echo "Hello ${{github.actor}}. You are running action: ${{github.action}} at ${{date}}"
