@@ -4,7 +4,11 @@ on:
   push:
     branches:
       - 'master'
+    paths:
+      - starter/frontend/**
   pull_request:
+    paths:
+      - starter/frontend/**
   workflow_dispatch:
 
 jobs:
