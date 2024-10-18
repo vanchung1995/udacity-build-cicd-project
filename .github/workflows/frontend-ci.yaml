@@ -27,11 +27,11 @@ jobs:
 
       - name: Install Dependencies
         run: | 
-          echo "TODO Install Dependencies"
+          cd starter/frontend && npm ci
 
       - name: Run Lint
         run: | 
-          cd starter/frontend && npm run lint
+          npm run lint
 
   test-job:
     runs-on: ubuntu-latest
@@ -52,11 +52,11 @@ jobs:
 
       - name: Install Dependencies
         run: | 
-          echo "TODO Install Dependencies"
+          cd starter/frontend && npm ci
 
       - name: Run Test
         run: | 
-          cd starter/frontend && npm run test
+          npm run test
 
   build-job:
     needs: [lint-job, test-job]
