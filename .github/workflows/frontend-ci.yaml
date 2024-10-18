@@ -1,19 +1,67 @@
 name: frontend-ci workflow
 
 on:
-  # push:
-  #   branches:
-  #     - 'master'
-  # pull_request:
+  push:
+    branches:
+      - 'master'
+  pull_request:
   workflow_dispatch:
 
 jobs:
-  checkout-and-greeting:
+  lint-job:
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: say greeting
+        
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Cache
+        uses: actions/cache@v4.1.1
+        with:
+          path: node_modules
+          key: lint-${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install Dependencies
         run: | 
-          echo "Hello ${{github.actor}}. You are running action: ${{github.action}} at $(date)"
+          echo "TODO Install Dependencies"
+
+      - name: Run Lint
+        run: | 
+          npm run lint
+
+  test-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Cache
+        uses: actions/cache@v4.1.1
+        with:
+          path: node_modules
+          key: lint-${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install Dependencies
+        run: | 
+          echo "TODO Install Dependencies"
+
+      - name: Run Test
+        run: | 
+          npm run test
+
+  build-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      
