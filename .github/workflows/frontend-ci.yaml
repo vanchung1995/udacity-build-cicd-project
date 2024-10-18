@@ -60,7 +60,7 @@ jobs:
       - name: Run Test
         working-directory: starter/frontend
         run: | 
-          pwd && ls -la && ls -la node_modules && npm run test
+          npm run test
 
   build-job:
     needs: [lint-job, test-job]
