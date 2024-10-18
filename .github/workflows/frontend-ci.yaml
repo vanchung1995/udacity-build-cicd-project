@@ -31,7 +31,7 @@ jobs:
 
       - name: Run Lint
         run: | 
-          npm run lint
+          cd starter/frontend && npm run lint
 
   test-job:
     runs-on: ubuntu-latest
@@ -56,9 +56,10 @@ jobs:
 
       - name: Run Test
         run: | 
-          npm run test
+          cd starter/frontend && npm run test
 
   build-job:
+    needs: [lint-job, test-job]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
