@@ -6,11 +6,11 @@ on:
       - 'master'
     paths:
       - starter/frontend/**
-      - .github/workflows/backend-cd.yaml
+      - .github/workflows/frontend-ci.yaml
   pull_request:
     paths:
       - starter/frontend/**
-      - .github/workflows/backend-cd.yaml
+      - .github/workflows/frontend-ci.yaml
   workflow_dispatch:
 
 jobs:
