@@ -73,7 +73,7 @@ jobs:
   #         pipenv run test
 
   build-job:
-    needs: [lint-job, test-job]
+    # needs: [lint-job, test-job]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
