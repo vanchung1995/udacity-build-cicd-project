@@ -139,4 +139,6 @@ jobs:
 
       - name: export backend url to variable
         run: | 
-          echo "REACT_APP_MOVIE_API_URL=$(kubectl get svc backend -o jsonpath='{.status.loadBalancer.ingress[0].hostname}:{.spec.ports[0].port}')" >> $GITHUB_ENV
+          BACKEND_URL=$(kubectl get svc backend -o jsonpath='{.status.loadBalancer.ingress[0].hostname}:{.spec.ports[0].port}')
+          echo "Backend URL: $BACKEND_URL"
+          echo "REACT_APP_MOVIE_API_URL=$BACKEND_URL" >> $GITHUB_ENV
