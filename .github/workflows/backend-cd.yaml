@@ -136,3 +136,7 @@ jobs:
           IMAGE_URL: ${{ vars.REGISTRY }}/${{ vars.REPO_BACKEND }}:${{needs.build-job.outputs.IMAGE_TAG}}
         run: | 
           kustomize edit set image backend=${{env.IMAGE_URL}} && kustomize build | kubectl apply -f -
+
+      - name: export backend url to variable
+        run: | 
+          echo "REACT_APP_MOVIE_API_URL=$(kubectl get svc backend -o jsonpath='{.status.loadBalancer.ingress[0].hostname}:{.spec.ports[0].port}')" >> $GITHUB_ENV
