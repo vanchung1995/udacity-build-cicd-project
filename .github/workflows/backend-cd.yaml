@@ -114,7 +114,11 @@ jobs:
 
       - name: setup kubectl cluster
         run: |
-          aws sts get-caller-identity && aws eks update-kubeconfig --region region-code --name ${{vars.CLUSTER}}
+          aws sts get-caller-identity
+          
+      - name: eks update config kube
+        run: | 
+          aws eks update-kubeconfig --region region-code --name ${{vars.CLUSTER}}
         env:
             DOCKER_BUILDKIT: 1
             DEBUG: 1
