@@ -1,7 +1,7 @@
 name: backend-ci workflow
 
 on:
-  push:
+  # push:
     # branches:
     #   - 'master'
     # paths:
