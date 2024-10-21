@@ -118,7 +118,7 @@ jobs:
           
       - name: eks update config kube
         run: | 
-          aws eks update-kubeconfig --region region-code --name ${{vars.CLUSTER}}
+          aws eks update-kubeconfig --region us-east-1 --name ${{vars.CLUSTER}}
         env:
             DOCKER_BUILDKIT: 1
             DEBUG: 1
