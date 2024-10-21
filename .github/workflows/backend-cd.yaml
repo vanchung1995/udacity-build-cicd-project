@@ -95,7 +95,7 @@ jobs:
           access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           registry: ${{ vars.REGISTRY }}
-          tags: "latest, $IMAGE_TAG"
+          tags: "latest, ${{env.IMAGE_TAG}}"
           repo: ${{ vars.REPO_BACKEND }}
           region: us-east-1
           dockerfile: starter/backend/Dockerfile
@@ -128,4 +128,4 @@ jobs:
       - name: deploy new image use new image
         working-directory: starter/backend/k8s
         run: | 
-          kustomize edit set image frontend= && kustomize build | kubectl apply -f -
+          kustomize edit set image backend= && kustomize build | kubectl apply -f -
