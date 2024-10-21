@@ -1,12 +1,6 @@
 name: backend-ci workflow
 
 on:
-  # push:
-    # branches:
-    #   - 'master'
-    # paths:
-    #   - starter/backend/**
-    #   - .github/workflows/backend-ci.yaml
   pull_request:
     branches:
       - 'main'
