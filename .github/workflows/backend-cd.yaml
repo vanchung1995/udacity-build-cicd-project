@@ -115,6 +115,9 @@ jobs:
       - name: setup kubectl cluster
         run: |
           aws sts get-caller-identity && aws eks update-kubeconfig --region region-code --name ${{vars.CLUSTER}}
+        env:
+            DOCKER_BUILDKIT: 1
+            DEBUG: 1
 
       - name: check kubectl and kustomize version
         run: | 
@@ -124,4 +127,3 @@ jobs:
         working-directory: starter/backend/k8s
         run: | 
           kustomize edit set image frontend= && kustomize build | kubectl apply -f -
-                
