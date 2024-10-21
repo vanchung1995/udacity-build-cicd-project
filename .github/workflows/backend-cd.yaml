@@ -95,7 +95,7 @@ jobs:
           access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           registry: ${{ vars.REGISTRY }}
-          tags: "latest, ${{IMAGE_TAG}}"
+          tags: "latest, $IMAGE_TAG"
           repo: ${{ vars.REPO_BACKEND }}
           region: us-east-1
           dockerfile: starter/backend/Dockerfile
