@@ -111,6 +111,13 @@ jobs:
         uses: syntaqx/setup-kustomize@v1
         with:
           kustomize-version: 5.0.1
+
+      - name: setup aws credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           
       - name: eks update config kube
         run: | 
