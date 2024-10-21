@@ -132,5 +132,7 @@ jobs:
 
       - name: deploy new image use new image
         working-directory: starter/backend/k8s
+        env:
+          IMAGE_URL: ${{ vars.REGISTRY }}/${{ vars.REPO_BACKEND }}:${{needs.build-job.outputs.IMAGE_TAG}}
         run: | 
-          kustomize edit set image backend= && kustomize build | kubectl apply -f -
+          kustomize edit set image backend=${{env.IMAGE_URL}} && kustomize build | kubectl apply -f -
