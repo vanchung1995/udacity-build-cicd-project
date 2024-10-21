@@ -98,3 +98,4 @@ jobs:
           region: us-east-1
           dockerfile: starter/backend/Dockerfile
           context: starter/backend
+          cache_from: "${{ vars.REGISTRY }}/${{ vars.REPO_BACKEND }}:latest"
