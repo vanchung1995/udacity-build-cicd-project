@@ -133,4 +133,4 @@ jobs:
       - name: export frontend url to variable
         run: | 
           FRONTEND_URL=$(kubectl get svc frontend -o jsonpath='{.status.loadBalancer.ingress[0].hostname}:{.spec.ports[0].port}')
-          echo "FRONTEND URL: $FRONTEND_URL"
+          && echo "FRONTEND URL: $FRONTEND_URL"
