@@ -90,6 +90,7 @@ jobs:
           region: us-east-1
           dockerfile: starter/frontend/Dockerfile
           context: starter/frontend
+          cache_from: "${{ vars.REGISTRY }}/${{ vars.REPO_FRONTEND }}:latest"
         # env:
         #   DOCKER_BUILDKIT: 1
         #   DEBUG: 1
