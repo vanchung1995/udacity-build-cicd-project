@@ -3,7 +3,7 @@ name: frontend-ci workflow
 on:
   pull_request:
     branches:
-      - 'main'
+      - master
     paths:
       - starter/frontend/**
       - .github/workflows/frontend-ci.yaml
