@@ -407,6 +407,14 @@ kustomize edit set image backend=<ECR_REPO_URL>:<NEW_TAG_HERE>
 kustomize build | kubectl apply -f -
 ```
 
+## Instructions:
+1. Setup terraform and init kube 
+Find instructions in `script.sh` 
+
+2. Copy credentials of github-action-user to github secrets and variables. Update variables `REPO_BACKEND`, `REPO_FRONTEND`, `REGISTRY` 
+
+3. After run backend cd, update `REACT_APP_MOVIE_API_URL` in environment variables in [settings](https://github.com/vanchung1995/udacity-build-cicd-project/settings/variables/actions) 
+
 ## License
 
 [License](LICENSE.md)
