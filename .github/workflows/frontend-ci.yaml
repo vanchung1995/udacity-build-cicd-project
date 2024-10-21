@@ -1,13 +1,15 @@
 name: frontend-ci workflow
 
 on:
-  push:
-    branches:
-      - 'master'
-    paths:
-      - starter/frontend/**
-      - .github/workflows/frontend-ci.yaml
+  # push:
+  #   branches:
+  #     - 'master'
+  #   paths:
+  #     - starter/frontend/**
+  #     - .github/workflows/frontend-ci.yaml
   pull_request:
+    branches:
+      - 'main'
     paths:
       - starter/frontend/**
       - .github/workflows/frontend-ci.yaml
