@@ -99,3 +99,10 @@ jobs:
           dockerfile: starter/backend/Dockerfile
           context: starter/backend
           cache_from: "${{ vars.REGISTRY }}/${{ vars.REPO_BACKEND }}:latest"
+
+  deploy-job:
+    needs: [build-job]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
