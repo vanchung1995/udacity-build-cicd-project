@@ -116,5 +116,5 @@ jobs:
 
       - name: check kubectl and kustomize version
         run: | 
-          kustomize version && kubectl --version
+          kustomize version && kubectl version
                 
