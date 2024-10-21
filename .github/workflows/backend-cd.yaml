@@ -3,7 +3,7 @@ name: backend-cd workflow
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - starter/backend/**
       - .github/workflows/backend-ci.yaml
@@ -114,7 +114,7 @@ jobs:
 
       - name: setup kubectl cluster
         run: |
-          aws sts get-caller-identity
+          aws --version && aws sts get-caller-identity
           
       - name: eks update config kube
         run: | 
