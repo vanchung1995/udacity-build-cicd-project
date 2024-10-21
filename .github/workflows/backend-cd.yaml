@@ -111,10 +111,6 @@ jobs:
         uses: syntaqx/setup-kustomize@v1
         with:
           kustomize-version: 5.0.1
-
-      - name: setup kubectl cluster
-        run: |
-          aws --version && aws sts get-caller-identity
           
       - name: eks update config kube
         run: | 
