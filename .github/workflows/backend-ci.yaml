@@ -3,7 +3,7 @@ name: backend-ci workflow
 on:
   pull_request:
     branches:
-      - 'main'
+      - master
     paths:
       - starter/backend/**
       - .github/workflows/backend-ci.yaml
