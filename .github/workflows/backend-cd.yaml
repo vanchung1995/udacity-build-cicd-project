@@ -6,7 +6,7 @@ on:
       - master
     paths:
       - starter/backend/**
-      - .github/workflows/backend-ci.yaml
+      - .github/workflows/backend-cd.yaml
   workflow_dispatch:
 
 jobs:
