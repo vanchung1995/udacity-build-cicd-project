@@ -10,98 +10,100 @@ on:
   workflow_dispatch:
 
 jobs:
-  # lint-job:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
+  lint-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
         
-  #     - name: Setup Python
-  #       uses: actions/setup-python@v5.2.0
-  #       with:
-  #         python-version: '3.10'
+      - name: Setup Python
+        uses: actions/setup-python@v5.2.0
+        with:
+          python-version: '3.10'
 
-  #     - name: Install pipenv
-  #       run: | 
-  #         pip install pipenv
+      - name: Install pipenv
+        run: | 
+          pip install pipenv
 
-  #     - name: Cache
-  #       uses: actions/cache@v4.1.1
-  #       with:
-  #         path: ~/.local/share/virtualenvs/
-  #         key: lint-${{ runner.os }}-node-${{ hashFiles('**/Pipfile.lock') }}
+      - name: Cache
+        uses: actions/cache@v4.1.1
+        with:
+          path: ~/.local/share/virtualenvs/
+          key: lint-${{ runner.os }}-node-${{ hashFiles('**/Pipfile.lock') }}
 
-  #     - name: Install Dependencies
-  #       working-directory: starter/backend
-  #       run: | 
-  #         pipenv install --dev
+      - name: Install Dependencies
+        working-directory: starter/backend
+        run: | 
+          pipenv install --dev
 
-  #     - name: Run Lint
-  #       working-directory: starter/backend
-  #       run: | 
-  #         pipenv run lint
+      - name: Run Lint
+        working-directory: starter/backend
+        run: | 
+          pipenv run lint
 
-  # test-job:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
+  test-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
         
-  #     - name: Setup Python
-  #       uses: actions/setup-python@v5.2.0
-  #       with:
-  #         python-version: '3.10'
+      - name: Setup Python
+        uses: actions/setup-python@v5.2.0
+        with:
+          python-version: '3.10'
 
-  #     - name: Install pipenv
-  #       run: | 
-  #         pip install pipenv
+      - name: Install pipenv
+        run: | 
+          pip install pipenv
 
-  #     - name: Cache
-  #       uses: actions/cache@v4.1.1
-  #       with:
-  #         path: ~/.local/share/virtualenvs/
-  #         key: test-${{ runner.os }}-node-${{ hashFiles('**/Pipfile.lock') }}
+      - name: Cache
+        uses: actions/cache@v4.1.1
+        with:
+          path: ~/.local/share/virtualenvs/
+          key: test-${{ runner.os }}-node-${{ hashFiles('**/Pipfile.lock') }}
 
-  #     - name: Install Dependencies
-  #       working-directory: starter/backend
-  #       run: | 
-  #         pipenv install
+      - name: Install Dependencies
+        working-directory: starter/backend
+        run: | 
+          pipenv install
 
-  #     - name: Run Test
-  #       working-directory: starter/backend
-  #       run: | 
-  #         pipenv run test
+      - name: Run Test
+        working-directory: starter/backend
+        run: | 
+          pipenv run test
 
-  # build-job:
-  #   needs: [lint-job, test-job]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
+  build-job:
+    needs: [lint-job, test-job]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-  #     - name: Get timestamp
-  #       id: get-timestamp
-  #       run: echo "::set-output name=timestamp::$(date +'%Y-%m-%d-%H-%M')"
+      - name: Get timestamp
+        id: get-timestamp
+        run: echo "::set-output name=timestamp::$(date +'%Y-%m-%d-%H-%M')"
 
-  #     - name: Get commit hash
-  #       id: get-commit-hash
-  #       run: echo "::set-output name=commit-hash::$(git rev-parse --short HEAD)"
+      - name: Get commit hash
+        id: get-commit-hash
+        run: echo "::set-output name=commit-hash::$(git rev-parse --short HEAD)"
 
-  #     - name: Build and upload image to ECR
-  #       uses: appleboy/docker-ecr-action@master
-  #       with:
-  #         access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         registry: ${{ vars.REGISTRY }}
-  #         tags: "latest, ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}"
-  #         repo: ${{ vars.REPO_BACKEND }}
-  #         region: us-east-1
-  #         dockerfile: starter/backend/Dockerfile
-  #         context: starter/backend
-  #         cache_from: "${{ vars.REGISTRY }}/${{ vars.REPO_BACKEND }}:latest"
+      - name: Build and upload image to ECR
+        uses: appleboy/docker-ecr-action@master
+        env:
+          IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
+        with:
+          access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          registry: ${{ vars.REGISTRY }}
+          tags: "latest, ${{IMAGE_TAG}}"
+          repo: ${{ vars.REPO_BACKEND }}
+          region: us-east-1
+          dockerfile: starter/backend/Dockerfile
+          context: starter/backend
+          cache_from: "${{ vars.REGISTRY }}/${{ vars.REPO_BACKEND }}:latest"
 
   deploy-job:
-    # needs: [build-job]
+    needs: [build-job]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -122,13 +124,6 @@ jobs:
       - name: eks update config kube
         run: | 
           aws eks update-kubeconfig --region us-east-1 --name ${{vars.CLUSTER}}
-        env:
-            DOCKER_BUILDKIT: 1
-            DEBUG: 1
-
-      - name: check kubectl and kustomize version
-        run: | 
-          kustomize version && kubectl version
 
       - name: deploy new image use new image
         working-directory: starter/backend/k8s
