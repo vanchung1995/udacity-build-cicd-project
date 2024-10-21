@@ -89,6 +89,7 @@ jobs:
 
       - name: Build and upload image to ECR
         uses: appleboy/docker-ecr-action@master
+        id: build-image
         env:
           IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
         with:
@@ -101,6 +102,10 @@ jobs:
           dockerfile: starter/backend/Dockerfile
           context: starter/backend
           cache_from: "${{ vars.REGISTRY }}/${{ vars.REPO_BACKEND }}:latest"
+          run: | 
+             echo "::set-output name=IMAGE_TAG::${{env.IMAGE_TAG}}"
+    outputs:
+      IMAGE_TAG: ${{ steps.build-image.outputs.IMAGE_TAG }}
 
   deploy-job:
     needs: [build-job]
